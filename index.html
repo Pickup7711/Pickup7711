@@ -1,0 +1,186 @@
+<!doctype html> 
+<html> 
+
+<title>PUBG-顾念的小网站</title>
+	
+<head>
+<style>
+body{background:url(bgimg.jpg) top left;
+background-size:100%;}
+</style>
+</head>
+
+<script language="JavaScript">
+	var expDays = 10;<!--cookie的期限-->
+var exp = new Date(); <!--新的时间变量-->
+exp.setTime(exp.getTime() + (expDays*24*60*60*1000));<!--过期的日期-->
+
+function Who(info){<!--获得访问者的昵称-->
+var VisitorName = GetCookie('VisitorName')<!--先从cookie中查找visitorName字段
+if (VisitorName == null) {<!--如果没有找到，则提示用户输入昵称-->
+VisitorName = prompt("请输入你的称呢（不可更改）：",'');<!--弹出提示窗口-->
+SetCookie ('VisitorName', VisitorName, exp);<!--将用户输入的昵称写入cookie中-->
+}
+return VisitorName;<!--返回用户的昵称-->
+} 
+
+function When(info){<!--返回用户的上次访问时间-->
+var rightNow = new Date()<!--构造变量-->
+var WWHTime = 0;
+WWHTime = GetCookie('WWhenH')<!--从cookie中获取上一次的时间-->
+
+WWHTime = WWHTime * 1
+var lastHereFormatting = new Date(WWHTime); 
+var intLastVisit = (lastHereFormatting.getYear() * 10000)+(lastHereFormatting.getMonth() * 100) + lastHereFormatting.getDate()<!--转化时间格式-->
+var lastHereInDateFormat = "" + lastHereFormatting;
+var dayOfWeek = lastHereInDateFormat.substring(0,3)<!--获取日子-->
+var dateMonth = lastHereInDateFormat.substring(4,11)<!--获取日期-->
+var timeOfDay = lastHereInDateFormat.substring(11,16)<!--获取时间-->
+var year = lastHereInDateFormat.substring(23,25)<!--获取年份-->
+var WWHText = dayOfWeek + " " + dateMonth+ timeOfDay<!--按日、月、年重新组合日期-->
+SetCookie ("WWhenH", rightNow.getTime(), exp)<!--将用户访问时间和过期时间均写入cookie中-->
+return WWHText;
+}
+
+function Count(info){<!--返回用户上站次数-->
+var WWHCount = GetCookie('WWHCount')<!--从cookie中读取wwwhcount字段-->
+if (WWHCount == null) {<!--如果返回值为空-->
+WWHCount = 0;<!--上站次数为0-->
+}
+else{
+WWHCount++;<!--否则，上站次数加1-->
+}
+SetCookie ('WWHCount', WWHCount, exp);<!--同时将更新过的信息写入cookie中-->
+return WWHCount;<!--返回上站次数-->
+}
+
+function getCookieVal (offset) {<!--返回cookie中一定位置的字段-->
+   var endstr = document.cookie.indexOf (";", offset);<!--获取指定位置字段的末尾的位置-->
+   if (endstr == -1)<!--如果返回值为－1-->
+     endstr = document.cookie.length;<!--则将给定位置后的所有字符串均返回-->
+  return unescape(document.cookie.substring(offset, endstr));<!--返回字符串-->
+}
+
+
+function GetCookie (name) {<!--从cookie中获取字段的值-->
+        var arg = name + "=";<!--变量-->
+      var alen = arg.length;<!--字段的长度-->
+        var clen = document.cookie.length;<!--cookie的长度-->
+        var i = 0;
+        while (i < clen) {<!--在cookie中-->
+               var j = i + alen;<!--移动一个字段的宽度-->
+                if (document.cookie.substring(i, j) == arg)<!--如果是待找字段-->
+                        return getCookieVal (j);<!--返回字段的值-->
+                i = document.cookie.indexOf(" ", i) + 1;<!--更新i的值-->
+                        if (i == 0)
+                                break;<!--如果找完了，返回-->
+               }
+   return null;
+}
+
+
+
+
+function SetCookie (name, value) {<!--向cookie中写入-->
+        var argv = SetCookie.arguments;<!--写入的变量数组-->
+        var argc = SetCookie.arguments.length;<!--变量的个数-->
+        var expires = (argc > 2) ? argv[2] : null;<!--变量数组中的第二个表示过期的时间-->
+        var path = (argc > 3) ? argv[3] : null;<!--变量的第三个表示路径-->
+        var domain = (argc > 4) ? argv[4] : null;<!--变量的第四个表示域-->
+        var secure = (argc > 5) ? argv[5] : false;<!--变量的第五个表示权限-->
+        document.cookie = name + "=" + escape (value) +
+                ((expires == null) ? "" : ("; expires=" +
+expires.toGMTString())) +
+                ((path == null) ? "" : ("; path=" + path)) +
+                ((domain == null) ? "" : ("; domain=" + domain)) +
+                ((secure == true) ? "; secure" : "");<!--按照给定的格式写入cookie-->
+
+}
+
+
+</script>
+</head>
+<body>
+<script language="JavaScript">
+document.write("您好 <b>" + Who() + "</b>，您是第 <b>" + Count() + "</b> 次访问本主页. <br>最后一次是 <b>" + When() +"</b>")
+</script>
+</body>
+
+<style>
+
+  #canvas {
+                position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    cursor: none;
+        }
+        .content{
+      position: absolute;
+    z-index: 11;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+.splash{
+  position: relative;
+  }
+  img#qq {
+    width: 128px;
+    background-size: cover;
+    border-radius: 200px;
+    box-shadow: 0px 0px 40px rgba(63, 81, 181, 0.72);
+    border: 3px solid #00a0ff;
+    opacity: 1;
+    margin: 0 auto;
+	margin-bottom: 20px;
+	transition: all 1.0s;  
+}
+#qq:hover {
+    box-shadow: 0 0 10px #fff;
+    -webkit-box-shadow: 0 0 19px #fff;
+    transform:rotate(360deg);
+    -ms-transform:rotate(360deg); 	/* IE 9 */
+    -moz-transform:rotate(360deg); 	/* Firefox */
+    -webkit-transform:rotate(360deg); /* Safari 和 Chrome */
+    -o-transform:rotate(360deg); 	/* Opera */
+    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+</style>
+
+
+</head>
+
+         
+           
+            
+                
+              
+  
+  <div class="jumbotron">
+    <div class="container">
+      <div class="splash">
+        <div class="content">
+          <center><img src="./PUBG.ico" tppabs="" alt="PatternFly logo" id="qq" class="wow fadeInDown animated"
+          style="visibility: visible; animation-name: fadeInDown;"></center>
+  
+<center><font size="8">欢迎来到PUBG-顾念的小网站</a></font> </center>
+
+<center><font size="5"><a href="./厕所1/index.html"target="_blank">老八厕所一战</a></font> </center>
+
+<center><font size="5"><a href="./厕所2/index.html"target="_blank">老八厕所二战</a></font> </center>
+
+<center><font size="5"><a href="./厕所3/index.html"target="_blank">老八厕所三战</a></font> </center>
+
+<center><font size="5"><a href="./狗丸/index.html"target="_blank">老八鞭炮崩睾丸</a></font> </center>
+
+<center><font size="5"><a href="./蔡徐坤/index.html"target="_blank">蔡徐坤原版视频</a></font> </center>
+
+<center><font size="5"><a href="#" onclick="alert('抖音号：PUBGgunian');">投稿方式</a></font></center>
+	      
+<center><div style="padding:5px 0"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2712523174&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2712523174:51" alt="投稿QQ" title="投稿QQ"/></a></center>
+
+</html>
